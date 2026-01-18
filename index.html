@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan | Indah & Fatwa</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #FEFEFE;
+      --bg-soft: #EFEDEE;
+      --text-main: #2E1E1F;
+      --text-soft: #755355;
+      --accent-main: #8A7577;
+      --accent-soft: #A49292;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #FFF8F5 0%, #FFE8E8 30%, #FFF5ED 60%, #F5E8E8 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      padding-bottom: 80px; /* ruang untuk bottom nav */
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.25) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 218, 185, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 239, 213, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* COVER */
+    .cover {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #FFFEFE 0%, #FFF8F5 50%, #FFE8E8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: opacity .8s ease;
+    }
+
+    .cover.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cover-content {
+      text-align: center;
+      padding: 24px;
+      animation: fadeUp 1s ease;
+    }
+
+    .cover h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      background: linear-gradient(135deg, #D4A574 0%, #E8B8B8 50%, #E8C5A0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 8px 0;
+    }
+
+    .guest {
+      margin: 24px 0 32px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .guest span {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .guest strong {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .btn-open {
+      border: 2px solid var(--accent-main);
+      background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(232, 184, 184, 0.1) 100%);
+      color: var(--accent-main);
+      padding: 12px 32px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(212, 165, 116, 0.2);
+    }
+
+    .btn-open:hover {
+      background: linear-gradient(135deg, #D4A574 0%, #E8B8B8 100%);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+    }
+
+    /* ISI */
+    .content { 
+      display: none;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .content.show { 
+      display: flex; 
+    }
+
+    .wrapper {
+      max-width: 560px;
+      width: 100%;
+      margin: auto;
+      background: linear-gradient(135deg, #FFFEFE 0%, #FFFBF8 100%);
+      padding: 48px 28px;
+      animation: fadeUp 1s ease;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 8px 32px rgba(138, 117, 119, 0.1);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 182, 193, 0.2);
+    }
+
+    /* PAGE SECTIONS */
+    .page-section {
+      display: none;
+      animation: fadeSection 0.3s ease-out;
+      width: 100%;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeSection {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1,h3 { font-family: 'Playfair Display', serif; }
+
+    .names h1 {
+      background: linear-gradient(135deg, #c58d51 0%, #f5aeae 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .event h3 {
+      background: linear-gradient(135deg, #8A7577 0%, #D4A574 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .center { text-align: center; }
+
+    .divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-main), transparent);
+      margin: 36px auto;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '❤️';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #FFFEFE 0%, #FFFBF8 100%);
+      padding: 0 8px;
+      font-size: 12px;
+    }
+
+    .quote {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--text-soft);
+      margin: 40px 0;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255, 182, 193, 0.1) 0%, rgba(255, 218, 185, 0.1) 100%);
+      border-radius: 15px;
+      border-left: 4px solid var(--accent-main);
+      position: relative;
+    }
+
+    .signature {
+      margin-top: 24px;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      background: linear-gradient(135deg, #c58d51 0%, #f5aeae 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* MAPS */
+    .maps-wrapper {
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .maps-wrapper iframe {
+      width: 100%;
+      height: 250px;
+      border: none;
+      display: block;
+    }
+
+    /* BANK TRANSFER */
+    .bank-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .bank-item {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 245, 238, 0.8) 0%, rgba(255, 239, 213, 0.6) 100%);
+      border: 1px solid rgba(212, 165, 116, 0.3);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .bank-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .bank-item::before {
+      content: "❤";
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      font-size: 12px;
+      color: var(--accent-main);
+      opacity: 0.6;
+    }
+
+    .bank-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-main);
+      margin-bottom: 4px;
+    }
+
+    .bank-number {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 2px;
+      word-break: break-all;
+    }
+
+    .bank-owner {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .gift-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    .copy-toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-main);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-out;
+      z-index: 9999;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .maps-wrapper iframe {
+        height: 200px;
+      }
+      .bank-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* BOTTOM NAVIGATION */
+    .bottom-nav {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 560px;
+      width: calc(100% - 32px);
+      background: linear-gradient(135deg, #FFFEFE 0%, #FFFBF8 100%);
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(138, 117, 119, 0.15);
+      border: 1px solid rgba(255, 182, 193, 0.3);
+      z-index: 4;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .nav-item {
+      flex: 1;
+      padding: 10px 0 8px;
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item span.icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(232, 184, 184, 0.2) 100%);
+      color: var(--accent-main);
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding-bottom: 70px;
+      }
+      .bottom-nav {
+        width: calc(100% - 20px);
+      }
+      .nav-item {
+        font-size: 10px;
+        padding: 8px 0 6px;
+      }
+      .nav-item span.icon {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MUSIK LATAR -->
+<audio id="bg-music" src="pernikahan.mp3" loop></audio>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="cover-content">
+    <p>Bismillahirrahmanirrahim</p>
+    <h1>Indah & Fatwa</h1>
+    <p>Undangan Pernikahan</p>
+
+    <div class="guest">
+      <span>Kepada Yth.</span>
+      <strong id="guestName">Tamu Undangan</strong>
+    </div>
+
+    <button class="btn-open" onclick="openInvitation()">Buka Undangan</button>
+  </div>
+</div>
+
+<!-- ISI UNDANGAN -->
+  <div class="content" id="content">
+    <div class="wrapper">
+
+      <!-- BERANDA -->
+      <section class="page-section active" data-section="beranda">
+        <div class="opening center">
+          <p><strong>Assalamu'alaikum Warahmatullahi Wabarakatuh</strong></p>
+          <p>
+            Dengan memohon rahmat dan ridho Allah SWT,<br>
+            kami bermaksud menyelenggarakan pernikahan putra-putri kami
+          </p>
+        </div>
+
+        <div class="names center">
+          <h1>Indah Diana, S.Pd.</h1>
+          <div class="family">
+            Putri Ketiga dari Alm. Bapak Saifurrahman<br>
+            & Ibu Asnah
+          </div>
+
+          <span>dengan</span>
+
+          <h1>Ahmad Fatwa Qomarodin, S.Kom.</h1>
+          <div class="family">
+            Putra Pertama dari Bapak Mohammad Syafiul<br>
+            & Ibu Siti Khosfah
+          </div>
+        </div>
+
+        <div class="signature center" style="margin-top: 32px;">
+          Indah & Fatwa
+        </div>
+      </section>
+
+      <!-- ACARA -->
+      <section class="page-section" data-section="acara">
+        <div class="event center">
+          <h3>Akad Nikah</h3>
+          <p class="date">Selasa, 27 Januari 2026</p>
+          <p>Pukul 14.00 WITA s/d Selesai</p>
+          <p>
+            Desa Tukadaya Munduk Ranti,<br>
+            Kec. Melaya, Kab. Jembrana, Bali
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="event center">
+          <h3>Resepsi</h3>
+          <p>Pukul 15.00 WITA s/d Selesai</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="quote center">
+          "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu
+          pasangan hidup dari jenismu sendiri supaya kamu cenderung dan merasa
+          tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
+          <br><br>
+          (QS. Ar-Rum : 21)
+        </div>
+      </section>
+
+      <!-- LOKASI -->
+      <section class="page-section" data-section="lokasi">
+        <div class="event center">
+          <h3>Lokasi Acara</h3>
+          <p>
+            Desa Tukadaya Munduk Ranti,<br>
+            Kec. Melaya, Kab. Jembrana, Bali
+          </p>
+        </div>
+        <div class="maps-wrapper">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15785.12823531408!2d114.83575292568356!3d-8.331996499999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd219621ba18937%3A0x5e93ca2de4e906c9!2sTukadaya%2C%20Melaya%2C%20Jembrana%20Regency%2C%20Bali!5e0!3m2!1sen!2sid!4v1234567890123!5m2!1sen!2sid"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </section>
+
+      <!-- GIFT -->
+      <section class="page-section" data-section="gift">
+        <div class="event center">
+          <h3>Kado Pernikahan (Transfer)</h3>
+          <p>
+            Kehadiran dan doa restu Bapak/Ibu/Saudara/i sudah sangat berarti bagi kami.<br>
+            Namun apabila berkenan memberikan tanda kasih secara non-tunai, dapat melalui:
+          </p>
+        </div>
+        <div class="divider"></div>
+        <div class="bank-list">
+          <div class="bank-item" data-rek="1234567890">
+            <div class="bank-name">BANK BCA</div>
+            <div class="bank-number">No. Rekening: 1234567890</div>
+            <div class="bank-owner">a.n. Ahmad Fatwa Qomarodin</div>
+          </div>
+          <div class="bank-item" data-rek="0987654321">
+            <div class="bank-name">BANK MANDIRI</div>
+            <div class="bank-number">No. Rekening: 0987654321</div>
+            <div class="bank-owner">a.n. Indah Diana</div>
+          </div>
+        </div>
+        <div class="gift-note center">
+          <p style="margin-top: 20px;">
+            Semoga apa yang diberikan menjadi amal jariyah dan mendapat balasan kebaikan
+            dari Allah Subhanahu Wa Ta'ala.
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="copy-toast" id="copy-toast">Nomor rekening tersalin! ✨</div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div class="bottom-nav">
+    <button class="nav-item active" data-target="beranda">
+      <span class="icon">🏠</span>
+      <span>Beranda</span>
+    </button>
+    <button class="nav-item" data-target="acara">
+      <span class="icon">📅</span>
+      <span>Acara</span>
+    </button>
+    <button class="nav-item" data-target="lokasi">
+      <span class="icon">📍</span>
+      <span>Lokasi</span>
+    </button>
+    <button class="nav-item" data-target="gift">
+      <span class="icon">🎁</span>
+      <span>Gift</span>
+    </button>
+  </div>
+
+<script>
+  function openInvitation() {
+    document.getElementById('cover').classList.add('hide');
+    document.getElementById('content').classList.add('show');
+    
+    // Putar musik
+    const audio = document.getElementById('bg-music');
+    if (audio) {
+      audio.play().catch(function(err) {
+        // Jika autoplay diblokir browser, coba lagi setelah user interaction
+        console.log('Autoplay diblokir:', err);
+      });
+    }
+  }
+
+  // Ambil nama tamu dari URL
+  const params = new URLSearchParams(window.location.search);
+  const guest = params.get('to');
+  if (guest) {
+    document.getElementById('guestName').innerText =
+      decodeURIComponent(guest.replace(/\+/g, ' '));
+  }
+
+  // NAVIGASI SECTION
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('.page-section');
+
+  navItems.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+
+      // Update active nav
+      navItems.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update active section
+      sections.forEach((sec) => {
+        if (sec.getAttribute('data-section') === target) {
+          sec.classList.add('active');
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+      });
+    });
+
+    // COPY NOMOR REKENING
+    document.addEventListener('DOMContentLoaded', function() {
+      const toast = document.getElementById('copy-toast');
+      if (!toast) return;
+
+      const bankItems = document.querySelectorAll('.bank-item');
+
+      bankItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const rek = this.getAttribute('data-rek');
+          if (!rek) return;
+
+          // Copy nomor rekening ke clipboard
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(rek).then(() => {
+              if (toast) {
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 1500);
+              }
+              this.style.transform = 'scale(0.97)';
+              setTimeout(() => this.style.transform = 'scale(1)', 140);
+            }).catch(() => {
+              // Fallback untuk browser lama
+              copyFallback(rek);
+            });
+          } else {
+            // Fallback langsung jika clipboard API tidak tersedia
+            copyFallback(rek);
+          }
+        });
+      });
+
+      function copyFallback(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-999999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          const successful = document.execCommand('copy');
+          if (successful && toast) {
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 1500);
+          } else {
+            alert('Nomor rekening: ' + text + '\n\nSilakan salin manual.');
+          }
+        } catch (err) {
+          alert('Nomor rekening: ' + text + '\n\nSilakan salin manual.');
+        }
+        document.body.removeChild(textarea);
+      }
+    });
+</script>
+
+</body>
+</html>
